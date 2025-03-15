@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romantic Online Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: pink;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            background-color: red;
+            color: white;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkred;
+        }
+        .scoreboard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .hearts {
+            font-size: 24px;
+            color: red;
+        }
+        .game-area {
+            display: none;
+            margin-top: 20px;
+        }
+        .game-object {
+            font-size: 40px;
+            cursor: pointer;
+            margin: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="scoreboard">
+            <div class="hearts" id="hearts">❤️❤️❤️</div>
+            <div>Score: <span id="score">0</span></div>
+        </div>
+        <h1>Welcome to Our Love Game hihihi ❤️</h1>
+        <p> HIEEEEEEEEE aaoiiii ek game khele !</p>
+        <button onclick="startGame()">Start</button>
+        <div id="gameArea" style="display: none;">
+            <p id="question"></p>
+            <button onclick="answer(true)">Yes</button>
+            <button onclick="answer(false)">No</button>
+        </div>
+        <p id="result"></p>
+        
+        <div id="funGame" class="game-area">
+            <h2>Tap the Big Heart ❤️</h2>
+            <p>Click on the big heart while avoiding distractions!</p>
+            <div>
+                <span class="game-object" onclick="checkObject('cow')">🐄</span>
+                <span class="game-object" onclick="checkObject('cat')">🐱</span>
+                <span class="game-object" onclick="checkObject('dog')">🐶</span>
+                <span class="game-object" onclick="checkObject('heart')">❤️</span>
+                <span class="game-object" onclick="checkObject('bug')">🐛</span>
+            </div>
+            <p id="loveMessage" style="display: none; font-size: 24px; color: red;">I LOVE MOLE UIUIU MIWAHH HIHII BIEEEEE ❤️</p>
+        </div>
+    </div>
+    
+    <script>
+        const questions = [
+            "Do you remember our first conversation?",
+            "Do you love me more than chocolates?",
+            "Would you choose to be with me forever?",
+            "Do you think we're the cutest?",
+            "will u be my baykoo?"
+        ];
+        let currentQuestion = 0;
+        let score = 0;
+        let hearts = 3;
+
+        function startGame() {
+            document.querySelector("button").style.display = "none";
+            document.getElementById("gameArea").style.display = "block";
+            document.getElementById("question").innerText = questions[currentQuestion];
+        }
+
+        function answer(choice) {
+            if (choice) {
+                score += 10;
+                currentQuestion++;
+                document.getElementById("score").innerText = score;
+                if (currentQuestion < questions.length) {
+                    document.getElementById("question").innerText = questions[currentQuestion];
+                } else {
+                    document.getElementById("gameArea").style.display = "none";
+                    document.getElementById("result").innerText = "You two are a perfect match! ❤️ Score: " + score;
+                    setTimeout(startFunGame, 2000);
+                }
+            } else {
+                hearts--;
+                updateHearts();
+                if (hearts === 0) {
+                    document.getElementById("gameArea").style.display = "none";
+                    document.getElementById("result").innerText = "Oh no! You lost all hearts! Try again 😊";
+                }
+            }
+        }
+
+        function updateHearts() {
+            let heartDisplay = "";
+            for (let i = 0; i < hearts; i++) {
+                heartDisplay += "❤️";
+            }
+            document.getElementById("hearts").innerHTML = heartDisplay;
+        }
+
+        function startFunGame() {
+            document.getElementById("funGame").style.display = "block";
+        }
+
+        function checkObject(object) {
+            if (object === "heart") {
+                document.getElementById("loveMessage").style.display = "block";
+            } else {
+                alert("Oops! Wrong one! Try again!");
+            }
+        }
+    </script>
+</body>
+</html>
